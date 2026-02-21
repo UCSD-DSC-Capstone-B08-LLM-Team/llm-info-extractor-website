@@ -1,4 +1,4 @@
-# LLM as Information Extractors
+# Large Language Models as Information Extractors in Healthcare
 
 ## Introduction
 
