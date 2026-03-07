@@ -2,7 +2,7 @@ theme: minima
 minima:
   skin: classic
 
-title: ""
+title: "Large Language Models as Information Extractors in Healthcare"
 description: ""
 
 github: false
