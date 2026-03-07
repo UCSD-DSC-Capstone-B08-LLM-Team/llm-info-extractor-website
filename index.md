@@ -69,8 +69,9 @@ Using the MIMIC-III database, we construct patient-level haystacks of notes and 
 
 
 ## Methodology
+
+![Pipeline]({{ '/assets/pipeline.png' | relative_url }})
 <div class="paper-figure">
-  ![Pipeline]({{ '/assets/pipeline.png' | relative_url }})
   <div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
 </div>
 

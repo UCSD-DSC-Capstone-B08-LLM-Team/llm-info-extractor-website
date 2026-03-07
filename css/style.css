@@ -10,10 +10,14 @@
 }
 
 .site-header {
-    position: relative !important; 
-    top: auto !important;
-    z-index: auto !important;
+    position: sticky;
     width: 100%;
+    max-width: 100%;
+    top: 0;
+    background: white;
+    z-index: 100;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Main paper layout */
@@ -49,9 +53,9 @@
 }
 
 .paper-sticky-buttons a {
-    padding: 4px 10px;       
-    font-size: 0.8rem;       
-    border-radius: 4px;      
+    padding: 8px 16px;    
+    font-size: 0.9rem; 
+    border-radius: 6px;      
     background: #0366d6;
     color: white;
     text-decoration: none;
