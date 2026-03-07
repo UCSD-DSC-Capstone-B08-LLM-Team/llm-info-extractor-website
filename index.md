@@ -1,14 +1,12 @@
 ---
 title: Home
-head: |
-  <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 ---
 
 <div class="paper-container">
 
 <aside class="sidebar" markdown="1">
 
-**Contents**
+**Table of Contents**
 * TOC
 {:toc}
 

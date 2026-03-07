@@ -1,52 +1,64 @@
-header.site-header {
-    display: block !important; /* Overrides your previous 'none' */
-    position: fixed !important; 
-    top: 0;
-    width: 100%;
-    z-index: 2000;
-    background-color: white;
-    border-bottom: 1px solid #eee;
-    height: 60px; /* Set a fixed height for consistency */
-}
-
+/* Center the main content area */
 .wrapper {
-    max-width: 1100px;
-    margin-top: 80px !important; 
-    overflow: visible !important; /* REQUIRED for sticky sidebar to work */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Push content below fixed header */
+.page-content {
+    padding-top: 90px;
+}
+
+/* Main paper layout */
 .paper-container {
-    display: flex;
-    gap: 40px;
-    align-items: flex-start; /* REQUIRED for sticky sidebar to work */
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 50px;
+    align-items: start;
 }
 
+/* Sticky table of contents */
 .sidebar {
-    width: 280px;
-    flex-shrink: 0;
-    position: -webkit-sticky; /* Support for Safari */
-    position: sticky !important;
-    top: 100px; /* Distance from the top of the window while scrolling */
-    height: fit-content;
+    position: sticky;
+    top: 100px;
+    font-size: 0.95rem;
 }
 
+/* TOC box styling */
 #markdown-toc {
-    border: 1px solid #ccc;
-    padding: 15px;
-    background: #f8f9fa;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 16px;
+    background: #fafafa;
     list-style: none;
 }
 
+/* Paper text column */
 .paper-content {
-    flex: 1;
+    max-width: 750px;
 }
 
-/* Mobile fix */
-@media (max-width: 800px) {
-    .paper-container { flex-direction: column; }
-    .sidebar { position: relative !important; top: 0; width: 100%; }
+/* Improve readability */
+.paper-content p {
+    line-height: 1.7;
 }
 
-body {
-    background: red;
+/* Prevent headings from hiding under header when clicked */
+html {
+    scroll-padding-top: 100px;
+}
+
+/* Mobile layout */
+@media (max-width: 900px) {
+
+    .paper-container {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: relative;
+        top: 0;
+        margin-bottom: 30px;
+    }
+
 }
