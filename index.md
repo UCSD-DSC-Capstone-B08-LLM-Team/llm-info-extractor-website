@@ -6,7 +6,7 @@ layout: default
 <div class="paper-container">
 
 <aside class="sidebar" markdown="1">
-**Table of Contents**
+<p>Table of Contents </p>
 * TOC
 {:toc}
 
