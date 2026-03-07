@@ -1,12 +1,11 @@
 ---
 title: Home
 head: |
-  <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
 ---
 
 # Large Language Models as Information Extractors in Healthcare
 {:toc}
-
 
 ## Abstract
 

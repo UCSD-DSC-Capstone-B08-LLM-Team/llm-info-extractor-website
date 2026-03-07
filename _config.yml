@@ -7,9 +7,5 @@ description: "Evaluating retrieval methods for LLM-based clinical information ex
 
 github: false
 
-header_pages:
-  - index.md
-  - abstract.md
-
 kramdown:
   toc_levels: 2..6
