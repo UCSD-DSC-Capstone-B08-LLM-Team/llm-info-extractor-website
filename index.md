@@ -37,9 +37,6 @@ layout: default
   <div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
 </div>
 
-</main>
-</div>
-
 
 ## Abstract
 Large Language Models (LLMs) show strong potential for clinical information extraction, yet their effectiveness depends heavily on retrieving relevant evidence from long, unstructured medical records. In this project, we evaluate retrieval-augmented generation (RAG) strategies in a controlled, privacy-preserving “needle-in-a-haystack” framework using the MIMIC-III clinical dataset. We derive clinically meaningful queries from CMS SEP-1 abstraction specifications and generate synthetic needles grounded in the abstraction logic to serve as known evidence within aggregated patient-level notes.
