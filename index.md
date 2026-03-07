@@ -7,10 +7,9 @@ layout: default
 
 <aside class="sidebar" markdown="1">
 
-<strong>
+**Table of Contents**
 * TOC
 {:toc}
-</strong>
 
 </aside>
 
