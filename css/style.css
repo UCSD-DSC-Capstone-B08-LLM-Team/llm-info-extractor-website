@@ -24,7 +24,7 @@
 .paper-container {
     display: grid;
     grid-template-columns: 230px 1fr;
-    gap: 50px;
+    gap: 80px;
     align-items: start;
 }
 
@@ -53,10 +53,8 @@
     position: sticky;
     top: 100px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    /* align-items: center;
-    flex-direction: row; */
     gap: 10px;
 }
 
