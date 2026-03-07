@@ -18,15 +18,12 @@ layout: default
 # Large Language Models as Information Extractors in Healthcare
 
 <div class="paper-meta">
-
-  **Leah Seseri, Lewis Weng, Omid Alamdar**  
-  University of California, San Diego  
-
-  **Mentors:** Aaron Boussina and Karandeep Singh
-
+  <strong>Leah Seseri, Lewis Weng, Omid Alamdar</strong><br>
+  University of California, San Diego<br><br>
+  <strong>Mentors:</strong> Aaron Boussina and Karandeep Singh
 </div>
 
-<div class="paper-links">
+<div class="paper-sticky-buttons">
   <a href="https://drive.google.com/file/d/1blgz2Qu0_6Q6jLcEsHvOmNzyLmKDGK7j/view?usp=drive_link">Report</a>
   <a href="">Poster</a>
   <a href="https://github.com/UCSD-DSC-Capstone-B08-LLM-Team/LLM_as_Info_Extractor">Github</a>

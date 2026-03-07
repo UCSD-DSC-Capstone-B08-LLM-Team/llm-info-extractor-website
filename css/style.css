@@ -37,6 +37,29 @@
     list-style: none;
 }
 
+.paper-sticky-buttons {
+    position: sticky;
+    top: 100px; /* distance from top */
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.paper-sticky-buttons a {
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: #0366d6;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.paper-sticky-buttons a:hover {
+    background: #024c9a;
+}
+
 /* Paper text column */
 .paper-content {
     max-width: 750px;
@@ -70,26 +93,6 @@ html {
 
 .paper-content h1 {
     text-align: center;
-}
-
-.paper-links {
-    margin-top: 15px;
-}
-
-.paper-links a {
-    display: inline-block;
-    margin: 6px;
-    padding: 8px 16px;
-    border-radius: 6px;
-    background: #0366d6;
-    color: white;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: background 0.2s;
-}
-
-.paper-links a:hover {
-    background: #024c9a;
 }
 
 /* Mobile layout */
