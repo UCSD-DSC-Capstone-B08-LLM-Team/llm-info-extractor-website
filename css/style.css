@@ -46,3 +46,7 @@ header.site-header {
     .paper-container { flex-direction: column; }
     .sidebar { position: relative !important; top: 0; width: 100%; }
 }
+
+body {
+    background: red;
+}
