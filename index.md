@@ -1,7 +1,7 @@
 ---
 title: Home
 head: |
-  <link rel="stylesheet" href="{{ '/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 ---
 
 # Large Language Models as Information Extractors in Healthcare
@@ -25,7 +25,6 @@ With the recent advances in large language models, maintaining and reporting on 
 
 In our research, we are studying to see whether LLMs are able to take on the ever-important task of extracting key information from medical notes and how we can improve their performance. We developed controlled needle-in-a-haystack evaluations and began systematically testing how well different retrieval strategies surface clinically relevant information before it reaches the LLM. These updates allow us to measure not only whether LLMs can extract key information, but how it can be augmented by retrieval strategies.
 
----
 
 ### 1.2 Prior Work
 
@@ -39,7 +38,6 @@ With these techniques, LLMs were as effective at parsing numeric values as caref
 
 RAG-based approaches may be able to compensate for this weakness. Building on this prior research, our project incorporates both retrieval-augmented techniques and controlled evaluation frameworks to better understand LLM behavior in realistic clinical scenarios. By comparing retrieval methods such as BM25, ColBERT, FAISS, Semantic Chunking, SPLADE, and hybrid approaches, we extend earlier work by quantifying how each method affects the LLM’s accuracy in downstream extraction tasks. This provides a more detailed picture of where current systems succeed, where they fail, and how retrieval choices influence overall model performance.
 
----
 
 ### 1.3 Relevant Data
 
