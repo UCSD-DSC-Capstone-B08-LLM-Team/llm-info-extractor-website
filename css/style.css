@@ -6,7 +6,11 @@
 
 /* Push content below fixed header */
 .page-content {
-    padding-top: 90px;
+    padding-top: 40px;
+}
+
+.site-header {
+    position: relative;
 }
 
 /* Main paper layout */
@@ -50,6 +54,42 @@ body {
 /* Prevent headings from hiding under header when clicked */
 html {
     scroll-padding-top: 100px;
+}
+
+.paper-meta {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    font-size: 1.05rem;
+    color: #444;
+    text-align: center;
+}
+
+.paper-meta strong {
+    font-size: 1.1rem;
+}
+
+.paper-content h1 {
+    text-align: center;
+}
+
+.paper-links {
+    margin-top: 15px;
+}
+
+.paper-links a {
+    display: inline-block;
+    margin: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: #0366d6;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+
+.paper-links a:hover {
+    background: #024c9a;
 }
 
 /* Mobile layout */

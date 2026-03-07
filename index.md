@@ -16,6 +16,26 @@ title: Home
 
 # Large Language Models as Information Extractors in Healthcare
 
+<div class="paper-meta">
+
+**Leah Seseri, Lewis Weng, Omid Alamdar**  
+University of California, San Diego  
+
+**Mentors:** Aaron Boussina and Karandeep Singh
+
+<div class="paper-links">
+<a href="LINK_TO_PDF">Report</a>
+<a href="https://github.com/YOUR_REPO">Poster</a>
+<a href="#">Github</a>
+</div>
+
+<div class="paper-figure">
+![Pipeline](assets/pipeline.png)
+<div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
+</div>
+
+</div>
+
 ## Abstract
 Large Language Models (LLMs) show strong potential for clinical information extraction, yet their effectiveness depends heavily on retrieving relevant evidence from long, unstructured medical records. In this project, we evaluate retrieval-augmented generation (RAG) strategies in a controlled, privacy-preserving “needle-in-a-haystack” framework using the MIMIC-III clinical dataset. We derive clinically meaningful queries from CMS SEP-1 abstraction specifications and generate synthetic needles grounded in the abstraction logic to serve as known evidence within aggregated patient-level notes.
 
