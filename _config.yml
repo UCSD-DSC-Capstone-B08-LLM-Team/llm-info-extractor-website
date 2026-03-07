@@ -1,7 +1,6 @@
 theme: minima
 minima:
   skin: classic
-  header: false
 
 title: "Large Language Models as Information Extractors in Healthcare"
 description: "Evaluating retrieval methods for LLM-based clinical information extraction using MIMIC clinical notes."
