@@ -6,11 +6,15 @@ layout: default
 <div class="paper-container">
 
 <aside class="sidebar" markdown="1">
-
 **Table of Contents**
 * TOC
 {:toc}
 
+<div class="paper-sticky-buttons">
+  <a href="https://drive.google.com/file/d/1blgz2Qu0_6Q6jLcEsHvOmNzyLmKDGK7j/view?usp=drive_link">Report</a>
+  <a href="">Poster</a>
+  <a href="https://github.com/UCSD-DSC-Capstone-B08-LLM-Team/LLM_as_Info_Extractor">Github</a>
+</div>
 </aside>
 
 <main class="paper-content" markdown="1">
@@ -23,16 +27,11 @@ layout: default
   <strong>Mentors:</strong> Aaron Boussina and Karandeep Singh
 </div>
 
-<div class="paper-sticky-buttons">
-  <a href="https://drive.google.com/file/d/1blgz2Qu0_6Q6jLcEsHvOmNzyLmKDGK7j/view?usp=drive_link">Report</a>
-  <a href="">Poster</a>
-  <a href="https://github.com/UCSD-DSC-Capstone-B08-LLM-Team/LLM_as_Info_Extractor">Github</a>
-</div>
-
-<div class="paper-figure">
+<!-- <div class="paper-figure">
   ![Pipeline]({{ '/assets/pipeline.png' | relative_url }})
+  <a href="/assets/pipeline.png"> </a>
   <div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
-</div>
+</div> -->
 
 
 ## Abstract
@@ -41,6 +40,8 @@ Large Language Models (LLMs) show strong potential for clinical information extr
 We compare multiple retrieval strategies, including BM25, FAISS (cosine and Euclidean), ColBERT, hybrid retrieval, Semantic Chunking, SPLADE, and Agentic Search, under realistic query-based conditions rather than exact keyword matching. For each patient, a single needle is inserted into long-context haystacks constructed from combined clinical notes, enabling systematic evaluation of retrieval accuracy and downstream LLM performance.
 
 LLM responses are generated using AWS Bedrock (primarily DeepSeek-V3) and evaluated across classification, extraction, and summarization tasks, with emphasis on classification accuracy and top-k retrieval metrics. Our results highlight how passage segmentation, semantic matching, and retrieval diversity influence model accuracy in long clinical narratives. By systematically comparing lexical, dense, sparse, and hybrid retrieval methods under identical experimental constraints, we provide insight into when retrieval meaningfully improves performance, when it may be unnecessary, and how context length and distractors shape LLM behavior. This work contributes a reproducible framework for evaluating retrieval strategies in clinical RAG systems and offers guidance for building cost-efficient, privacy-conscious medical AI pipelines.
+
+![Pipeline]({{ '/assets/pipeline.png' | relative_url }})
 
 ## Introduction
 

@@ -10,7 +10,9 @@
 }
 
 .site-header {
-    position: relative;
+    position: relative !important; 
+    top: auto !important;
+    z-index: auto !important;
 }
 
 /* Main paper layout */
@@ -39,11 +41,10 @@
 
 .paper-sticky-buttons {
     position: sticky;
-    top: 100px; /* distance from top */
+    top: 100px;
     display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .paper-sticky-buttons a {
