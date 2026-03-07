@@ -4,9 +4,35 @@ head: |
   <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 ---
 
-# Large Language Models as Information Extractors in Healthcare
+<div class="paper-container">
+
+<aside class="sidebar" markdown="1">
+
+**Contents**
 * TOC
 {:toc}
+
+</aside>
+
+<main class="paper-content" markdown="1">
+
+# Large Language Models as Information Extractors in Healthcare
+
+## Abstract
+
+
+## Introduction
+
+
+</main>
+
+</div>
+
+
+
+
+<!-- # Large Language Models as Information Extractors in Healthcare
+
 
 ## Abstract
 
@@ -58,4 +84,4 @@ Using the MIMIC-III database, we construct patient-level haystacks of notes and 
 
 
 ## Conclusion
-
+ -->

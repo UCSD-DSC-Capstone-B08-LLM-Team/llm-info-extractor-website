@@ -2,8 +2,8 @@
 header.site-header {
     position: sticky;
     top: 0;
-    background-color: #f03131; /* Gives it a solid background so text doesn't overlap */
-    z-index: 1000;             /* Ensures it stays on top of other content */
+    background-color: #f03131; 
+    z-index: 1000;             
     border-bottom: 1px solid #e8e8e8; 
 }
 
@@ -26,10 +26,53 @@ header.site-header {
     
     /* Add these to make the TOC sticky */
     position: sticky;
-    top: 80px; /* Leaves room so the header doesn't cover it */
-    float: right; /* Puts it on the right side of the page */
-    width: 300px; /* Gives it a fixed width */
+    top: 80px; 
+    float: right; 
+    width: 300px; 
     margin-left: 20px;
+}
+
+/* Layout for paper pages */
+.paper-container {
+    display: flex;
+    gap: 40px;              
+    align-items: flex-start; 
+    margin-top: 30px;
+}
+
+.paper-content {
+    flex: 1;                
+    min-width: 0;            
+}
+
+/* Sidebar behavior */
+.sidebar {
+    width: 280px;           
+    flex-shrink: 0;          
+    position: sticky;        
+    top: 80px;               
+}
+
+/* Make the TOC background blend nicely in the sidebar */
+#markdown-toc {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 0;
+    background: #f8f9fa; 
+    border-radius: 6px;     
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 850px) {
+    .paper-container {
+        flex-direction: column; 
+    }
+    .sidebar {
+        width: 100%;           
+        position: relative;    
+        top: 0;
+        margin-bottom: 30px;
+    }
 }
 
 #markdown-toc ul {
