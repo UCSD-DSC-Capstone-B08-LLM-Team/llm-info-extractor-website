@@ -13,6 +13,7 @@
     position: relative !important; 
     top: auto !important;
     z-index: auto !important;
+    width: 100%;
 }
 
 /* Main paper layout */
@@ -48,12 +49,12 @@
 }
 
 .paper-sticky-buttons a {
-    padding: 8px 16px;
-    border-radius: 6px;
+    padding: 4px 10px;       
+    font-size: 0.8rem;       
+    border-radius: 4px;      
     background: #0366d6;
     color: white;
     text-decoration: none;
-    font-size: 0.9rem;
     transition: background 0.2s;
 }
 
