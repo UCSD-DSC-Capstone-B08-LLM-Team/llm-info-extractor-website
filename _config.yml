@@ -10,11 +10,6 @@ github: false
 header_pages:
   - index.md
   - abstract.md
-  - introduction.md
-  - data.md
-  - methodology.md
-  - results.md
-  - conclusion.md
 
 kramdown:
   toc_levels: 2..6
