@@ -38,3 +38,7 @@ header.site-header {
 #markdown-toc a:hover {
     color: #000;
 }
+
+header.site-header {
+    display: none;
+}

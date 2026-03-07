@@ -10,3 +10,5 @@ github: false
 
 kramdown:
   toc_levels: 2..6
+  auto_ids: true
+  toc: true
