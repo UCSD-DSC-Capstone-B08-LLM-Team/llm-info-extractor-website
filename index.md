@@ -1,9 +1,11 @@
 ---
-title: Large Language Models as Information Extractors in Healthcare
+title: Home
 head: |
   <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
 ---
 
+# Large Language Models as Information Extractors in Healthcare
+* TOC
 {:toc}
 
 ## Abstract

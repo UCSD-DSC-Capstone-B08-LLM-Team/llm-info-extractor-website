@@ -1,6 +1,10 @@
 /* Remove Minima default header */
 header.site-header {
-    display: none;
+    position: sticky;
+    top: 0;
+    background-color: #f03131; /* Gives it a solid background so text doesn't overlap */
+    z-index: 1000;             /* Ensures it stays on top of other content */
+    border-bottom: 1px solid #e8e8e8; 
 }
 
 /* Make page content wider */
@@ -18,7 +22,14 @@ header.site-header {
     border: 1px solid #ccc;
     padding: 15px;
     margin: 20px 0;
-    background: #f9f9f9;
+    background: blue; 
+    
+    /* Add these to make the TOC sticky */
+    position: sticky;
+    top: 80px; /* Leaves room so the header doesn't cover it */
+    float: right; /* Puts it on the right side of the page */
+    width: 300px; /* Gives it a fixed width */
+    margin-left: 20px;
 }
 
 #markdown-toc ul {
@@ -37,8 +48,4 @@ header.site-header {
 
 #markdown-toc a:hover {
     color: #000;
-}
-
-header.site-header {
-    display: none;
 }
