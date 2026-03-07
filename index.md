@@ -7,9 +7,10 @@ layout: default
 
 <aside class="sidebar" markdown="1">
 
-**Table of Contents**
+<strong>
 * TOC
 {:toc}
+</strong>
 
 </aside>
 
@@ -35,6 +36,9 @@ layout: default
 <div class="paper-figure">
   ![Pipeline]({{ '/assets/pipeline.png' | relative_url }})
   <div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
+</div>
+
+</main>
 </div>
 
 
