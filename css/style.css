@@ -43,6 +43,10 @@
     line-height: 1.7;
 }
 
+body {
+    background: white;
+}
+
 /* Prevent headings from hiding under header when clicked */
 html {
     scroll-padding-top: 100px;
