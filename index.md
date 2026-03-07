@@ -5,7 +5,7 @@ layout: default
 
 <div class="paper-container">
 
-<aside class="sidebar">
+<aside class="sidebar" markdown="1">
 **Table of Contents**
 * TOC
 {:toc}
@@ -17,7 +17,7 @@ layout: default
 </div>
 </aside>
 
-<main class="paper-content">
+<main class="paper-content" markdown="1">
 
 # Large Language Models as Information Extractors in Healthcare
 
