@@ -46,7 +46,7 @@ This work provides
 
 To test how well LLMs can locate important clinical details, we created a “needle in a haystack” approach using real patient records. Our process is visually shown in Figure 1. 
 
-![Pipeline]({{ '/assets/pipeline_2.png' | relative_url }})
+![Pipeline]({{ '/assets/pipeline.png' | relative_url }})
 <div class="paper-figure">
   <div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
 </div>
@@ -93,19 +93,54 @@ We evaluated model performance by comparing the LLM’s responses to the known s
 
 ## Results
 
-
 Our experiments revealed clear differences in how well each retrieval method helped the LLM find the hidden “needle” information within patient records. SPLADE consistently achieved the highest retrieval success, meaning it was the most effective at finding the relevant clinical evidence across all five clinical elements. In contrast, BM25 showed the lowest performance, struggling to retrieve relevant passages when the wording of the query differed from the text. Methods based on semantic similarity, such as FAISS and semantic chunking, performed better than BM25 but still did not reach the performance of SPLADE. The hybrid approach, which combines keyword matching and semantic similarity, generally improved performance when both individual methods worked well. Adding MMR (Maximal Marginal Relevance) to FAISS further improved results by reducing redundancy in the retrieved passages while maintaining relevance. Overall, these results suggest that retrieval methods that understand semantic meaning are more effective than simple keyword matching when searching clinical notes.
+
+![Pipeline]({{ '/assets/recall_by_element_grouped.png' | relative_url }})
+<div class="paper-figure">
+  <div class="figure-caption">Figure 2: Top-k recall across retrieval methods.</div>
+</div>
 
 We also found that retrieval success depended on the type of clinical information being searched. Some elements were easier for the LLM to find than others. The easiest elements to retrieve were clinical trial information and comfort care directives. Vasopressor administration was the most difficult to retrieve, with severe sepsis indicators and administrative contraindications to care being moderately difficult. Across nearly all retrieval methods, vasopressor-related information was the hardest to locate, while clinical trial information produced the highest retrieval accuracy. This variation suggests that certain types of clinical language are inherently more difficult for retrieval systems to identify, even when the ground truth evidence is present.
 
+![Pipeline]({{ '/assets/retrieval_success_heatmap.png' | relative_url }})
+<div class="paper-figure">
+  <div class="figure-caption">Figure 3: LLM extraction accuracy across retrieval strategies and clinical elements.</div>
+</div>
+
 We next evaluated how well the LLM could answer questions and extract evidence from the patient records. When the model received retrieved passages, it generally performed better than when given the entire patient record at once. This shows that focusing the model on relevant sections of text helps improve accuracy. Among all retrieval strategies, SPLADE produced the highest LLM accuracy, FAISS + MMR performed second best, and BM25 consistently produced the lowest accuracy. These results demonstrate that LLMs perform best when they are guided toward the most relevant information rather than processing large, unfiltered documents.
+
+![Pipeline]({{ '/assets/llm_accuracy_heatmap.png' | relative_url }})
+<div class="paper-figure">
+  <div class="figure-caption">Figure 4: LLM classification accuracy across retrieval strategies and clinical elements.</div>
+</div>
 
 We also studied how the amount of text provided to the model affected performance and found that two key patterns emerged.
  - Longer context decreased accuracy, likely because irrelevant information distracted the model.
  - Retrieving more passages increased the chance of finding the needle, but too many passages introduced additional noise.
 Balancing these factors, we found that retrieving the top 10 passages provided the best trade-off between retrieval success and LLM accuracy.
 
-Finally, we examined the relationship between retrieval success and LLM accuracy. We observed a strong positive correlation between the two. When retrieval methods successfully located the needle, the LLM almost always answered correctly. When retrieval failed to locate the needle, the LLM struggled to produce accurate responses. Interestingly, although the baseline method (providing the full patient record) technically included the needle every time, the LLM performed worse due to the large amount of irrelevant context. This finding highlights a key takeaway: LLMs are highly effective at extracting clinical information when they are provided with focused high quality context.
+Finally, we examined the relationship between retrieval success and LLM accuracy. We observed a strong positive correlation between the two. 
+
+![Pipeline]({{ '/assets/retrieval_methods_scatter.png' | relative_url }})
+<div class="paper-figure">
+  <div class="figure-caption">Figure 5: Relationship between retrieval recall and LLM accuracy. Higher retrieval recall generally leads to more accurate LLM responses. </div>
+</div>
+
+When comparing all the retrieval methods with the baseline, we can see that improving retrieval methods lead to better LLM accuracy.
+
+![Pipeline]({{ '/assets/baseline_vs_retrieval_scatter.png' | relative_url }})
+<div class="paper-figure">
+  <div class="figure-caption">Figure 6: Relationship between retrieval recall and LLM accuracy when compared to the baseline.</div>
+</div>
+
+When retrieval methods successfully located the needle, the LLM almost always answered correctly. When retrieval failed to locate the needle, the LLM struggled to produce accurate responses. Interestingly, although the baseline method (providing the full patient record) technically included the needle every time, the LLM performed worse due to the large amount of irrelevant context. 
+
+![Pipeline]({{ '/assets/improvement_vs_baseline.png' | relative_url }})
+<div class="paper-figure">
+  <div class="figure-caption">Figure 7: Improvement in LLM accuracy when using retrieval based methods compared to the baseline across clinical elements. </div>
+</div>
+
+These findings highlight a key takeaway: LLMs are highly effective at extracting clinical information when they are provided with focused high quality context.
 
 ## Conclusion
 
