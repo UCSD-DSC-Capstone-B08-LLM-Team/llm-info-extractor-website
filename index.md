@@ -27,75 +27,97 @@ layout: default
   <strong>Mentors:</strong> Aaron Boussina and Karandeep Singh
 </div>
 
-
-## Abstract
-Large Language Models (LLMs) show strong potential for clinical information extraction, however, electronic health records (EHR) often contain large amounts of redundant or irrelevant text that confuse the LLM making it struggle to reliably retrieve relevant information. Retrieval-augmented generation (RAG) can mitigate this challenge by reducing the amount of context provided to the LLM, although the most optimal approaches have not been explored. We introduce a benchmark for evaluating and comparing retrieval methods for EHR information extraction. Using the Severe Sepsis and Septic Shock Early Management Bundle (SEP-1) from the Centers for Medicare and Medicaid Services (CMS) specifications manual, we generated 100 synthetic needles representing positive qualifiers across five clinically meaningful elements. For each element, we randomly selected 10,000 patients from the MIMIC-III dataset (461,290 total clinical notes) and inserted one synthetic needle per patient to construct patient-level haystacks. We evaluated six retrieval strategies and prompted the LLM using top-10 retrieved passages. We assess the retrieval approaches against a baseline approach without RAG that uses all the information within the context limit of the model. LLM responses were generated using AWS Bedrock (DeepSeek-V3) and evaluated on classification and extraction tasks. SPLADE achieved the highest top-k recall, while BM25 achieved the lowest. Retrieval effectiveness varied by clinical element, with clinical trial queries achieving the highest recall and vasopressor queries the lowest. Baseline performance indicated that longer context and higher top-k retrieval reduced model accuracy, showcasing the need for retrieval. Overall, our results demonstrate a strong positive correlation between retrieval quality and LLM accuracy, emphasizing that developing and improving retrieval strategies can lead to more effective clinical information extraction.  
-
 ## Introduction
+Doctors and hospitals rely on medical records to make life-or-death decisions. These records contain vital information such as diagnoses, treatments, medications, lab results, and clinical observations that guide patient care.
 
-Extracting information from medical charts is critical for patient care and healthcare operations. Medical documentation contains diagnoses, treatments, medications, laboratory results, and observations that directly influence medical decision making.
-Thus, it is significant that extracting this information from charts is not only done but achieved accurately. Moreover, not only does the information on medical charts matter, but there are numerous other tasks that depend on this information. Extracted chart data can be used for direct patient care and populating clinical registries. Such registries include providing information to advance medical research or reporting data to regulatory bodies so that guidelines and standards are enforced. One example of a regulatory body that data needs to be reported to is the Centers for Medicare and Medicaid Services (CMS). CMS oversees programs such as Medicare, Medicaid, and other reimbursement policies designed to improve access and equity of healthcare systems \citep{dasari2024opportunities}. They run reporting programs to evaluate hospital performance which hospitals provide by reviewing medical charts and extracting clinical data. However, this process can be time consuming and often requires the effort of medical staff making quality reporting a costly activity \citep{boussina2024large}. Therefore, medical chart data is not merely stored for documentation. Extracting this information is essential for hospital and patient care while also being the backbone for ancillary activities.
+But medical records are long, complex, and often messy. Finding the important details can take hours of careful review, and mistakes or delays can affect patient outcomes. Accurate information extraction is not only critical for doctors and patients, but it also supports hospital operations, research, and reporting to agencies like the Centers for Medicare and Medicaid Services (CMS). 
 
-Large language models have been used to extract unstructured information from electronic health records (EHR). However, it is well known that large language models struggle to extract long contexts effectively. An article from Chroma found that having larger having context windows with irrelevant context often ends up in worse performance for an LLM \citep{hong2025context}. As additional context was added, particularly within the middle of an LLM’s context, researchers often found the LLMs performance declined substantially. 
+AI tools, like large language models (LLMs), can help speed up information extraction from medical records. But they have a problem: when given long and messy notes, they often get confused and miss the most important details. This limits how much hospitals can rely on AI for critical tasks. Retrieval-augmented generation (RAG) can help mitigate this challenge by reducing the amount of information providing to LLMs, however, this field is underexplored. Thus, we introduce a benchmark for evaluating and comparing retrieval methods for EHR information extraction. To help LLMs focus on the right information, we tested different retrieval strategies that guide the model to the most relevant parts of the records before it answers questions. Through this framework, researchers are able to compare different strategies and see which ones work best in medical settings.
 
-Another limitation that comes with using LLM's to extract information is that oftentimes the LLM produces results that are inaccurate or unrelated to the task at hand. One study attempted to store numeric information from LLMs into structured records and used several heruistic-based approaches to reduce hallucinations \citep{adam2025clinical}. These approaches included using a regex-based cross-checking scheme, removing values that were used as examples in few-shot prompting, and removing values outside of a predefined range of plausible values. With these techniques, LLMs were as effective at parsing numeric values as carefully constructed, specific regex expressions, though taking substantially less time. 
+We tested our methods using real patient records from the MIMIC-III database, which contains thousands of de-identified unstructured clinical notes from a hospital’s intensive care units. These notes come in many forms such as nursing notes, doctor’s observations, lab reports, and discharge summaries, and they vary in length and style.
 
-Recent work demonstrated that LLMs can successfully extract clinically important information from medical text. In a 2024 study, multiple large language models were evaluated on synthetic clinical notes with all models performing well, and with Claude achieving the best performance \citep{ntinopoulos2025large}. One study uses the annotation of manual reviewers as the ground truth, and found that Chat-GPT performed perfect in some categories, such as detecting smoking and not detecting cancer when not present, but performed worse (58\%) in other categories, such as identifying Family History of Heart Disease \citep{bhagat2024large}. Other studies include humans working alongside LLM's to annotate health data to generate ground truth labels. They found that LLM's helped reviewers work on average 54\% faster. In addition, when the LLM was confident in its answer, it achieved a 96.3\% accuracy, showing that the increase in speed did not come with at a notable loss  \citep{goel2023llms}. These findings indicate that LLMs have are capable of clinical information extraction, however, the effectiveness of these approaches depend on retrieving relevant context from large clinical records. 
+This work provides 
+ - A benchmark for evaluating retrieval approaches on medical information.
+ - A comparison of different retrieval strategies to see which methods work best.
+ - Insights for researchers on how to make LLMs more accurate and reliable in healthcare settings.
 
-Retrieval-augmented generation (RAG) is a common approach used to improve LLM accuracy by retrieving relevant information before model inference. However, evaluation of retrieval strategies and the approaches that may be most optimal for EHR data extraction remain underexplored. To address this gap, this work introduces a benchmark for evaluating information retrieval approaches in medicine by covering a diverse range of methods, metrics, and clinical scenarios. 
-
-We use the MIMIC-III Clinical Database which contains de-identified EHR data for around 46,000 patients from the critical care units of Beth Israel Deaconess Medical Center in Boston between 2001 and 2012 \citep{PhysioNet-mimiciii-1.4}. It includes structured data such as demographics, vital signs, lab results, medications, and diagnostic codes, in which identifying information were de-identified, but we focus on the large collection of unstructured clinical notes present in the data. The NOTEEVENTS table contains a large amount of free text notes that vary in length, structure, and purpose, often written in domain specific language with variability in phrasing and abbreviations. We used the TEXT column from the NOTEEVENTS table, which contains a wide range of unstructured clinical documentation, including nursing notes, physician notes, ECG reports, radiology reports, and discharge summaries \citep{PhysioNet-mimiciii-1.4}. 
-
-This work provides (1) a benchmark for evaluating retrieval approaches on clinical notes, (2) a systematic comparison of retrieval strategies, and (3) insights into which approaches perform best for EHR information extraction.
 
 ## Methodology
 
-### Data Preparation
-To evaluate LLM performance in a controlled needle-in-a-haystack setting, we utilized version 5.18a of the Centers for Medicare and Medicaid Services (CMS) Specifications Manual for National Hospital Inpatient Quality Measures. In particular, we used the SEP-1 1b-Alpha Data Dictionary (AlphaDD) abstraction specifications to define clinically meaningful queries that served as inputs to the retrieval step for identifying relevant passages \citep{cms_sep1_alphadd}.
-
-We constructed queries representing positive qualifiers based on five elements described in the manual: Administrative Contraindication to Care–Severe Sepsis, Directive for Comfort Care or Palliative Care–Severe Sepsis, Clinical Trial–Severe Sepsis, Severe Sepsis Present, and Vasopressor Administration–Severe Sepsis. Synthetic "needle" statements were generated from these queries using template clinical note patterns described in the CMS documentation. This approach ensured semantic diversity while maintaining clinical validity. Each generated needle satisfied the abstraction logic defined in the manual and provided a definitive response to the associated query, allowing the needles to serve as ground truth evidence for evaluation.
-
-For each patient, all notes contained in the TEXT field were aggregated to create a patient level document representing the clinical "haystack". One synthetic needle corresponding to one of the five clinical elements was then randomly inserted into each patient's aggregated notes. We randomly selected 10,000 patients from the dataset and inserted a needle into each patient for all five elements. This procedure produced long context documents that simulate the review of a full patient chart. This experimental design consisting of a patient level haystack, a query derived from SEP-1 abstraction logic, and a known piece of supporting evidence which is the needle, enabled systematic evaluation of retrieval performance and downstream LLM tasks, including classification and information extraction.
+To test how well LLMs can locate important clinical details, we created a “needle in a haystack” approach using real patient records. Our process is visually shown in Figure 1. 
 
 ![Pipeline]({{ '/assets/pipeline_2.png' | relative_url }})
 <div class="paper-figure">
   <div class="figure-caption">Figure 1: Overview of the LLM-based information extraction pipeline.</div>
 </div>
 
-### Retrieval Methods
-The retrieval approaches evaluated in this study included Best Matching 25 (BM25), Facebook AI Similarity Search (FAISS), FAISS using Maximal Marginal Relevance (MMR), semantic chunking, Sparse Lexical and Dense (SPLADE), and a hybrid retrieval approach.
+### Data Preparation
 
-BM25 is a widely used lexical retrieval algorithm that ranks documents based on term frequency and inverse document frequency (IDF) \citep{10.1561/1500000019}. While BM25 is effective for exact keyword matching, it often struggles to capture semantic relationships when queries and documents use different terminology.
+We defined meaningful quries by using guidelines of the Severe Sepsis and Septic Shock Early Management Bundle (SEP-1) from the CMS specifications manual. We constructed these queries based on five elements described in the manual: 
 
-We also evaluated dense retrieval using FAISS, a vector search library that enables similarity search over high dimensional embeddings \citep{douze2025faisslibrary}. Text passages were converted into vector representations using sentence-transformer embeddings, and similarity between query and passage vectors was computed using both cosine similarity and Euclidean distance. To further improve retrieval diversity, we implemented MMR with FAISS \citep{10.1145/290941.291025}. MMR selects passages that maximize relevance to the query while minimizing redundancy among retrieved passages, thereby increasing coverage of distinct clinical evidence.
+ - Administrative Contraindication to Care–Severe Sepsis
+ - Directive for Comfort Care or Palliative Care–Severe Sepsis 
+ - Clinical Trial–Severe Sepsis
+ - Severe Sepsis Present
+ - Vasopressor Administration–Severe Sepsis. 
 
-In semantic chunking, the haystack was segmented into contextually coherent units. This method detects semantic shifts within the text and groups related sentences into meaningful segments before computing embeddings. By preserving semantic coherence within each chunk, this approach can improve retrieval quality by ensuring that related clinical evidence remains grouped together.
+ We then randomly genertated 100 example "needle" statements that provide positive responses to the queries and serve as ground truth evidence for evaluation. These needles were inserted randomly into each patient's record, creating our "haystack" or a long document full of extra information with one important fact hidden inside. Our benchmark consists of 10,000 patients (461,290 total clinical notes) resulting in  10,000 haystacks used for evaluation.  
 
-SPLADE is a sparse retrieval model that expands queries and documents into weighted lexical representations using a transformer-based encoder\citep{10.1145/3404835.3463098}. Unlike traditional lexical methods, SPLADE assigns weights to terms based on contextual importance, enabling semantic matching while retaining the efficiency of inverted index search structures. This approach improves lexical recall by allowing retrieval of semantically related terms and synonyms.
+### Retrieval approaches
 
-Finally, we implemented a hybrid retrieval approach that combines BM25 and FAISS retrieval scores \citep{Hakdagli_2024}. Passage scores from each method were combined using equal weighting, allowing the hybrid approach to leverage the complementary strengths of lexical and semantic retrieval.
+We wanted to determine which retrieval methods could help LLMs find the needles most effectively so we testd six approaches:
 
-To evaluate the necessity of retrieval prior to LLM prompting, we also implemented a baseline approach. The full-context baseline is that the entire patient haystack was provided directly to the LLM without retrieval. Thus, instead of entering the retrieved passages, the entire haystack acts as the passage. Due to model token limitations, this context was truncated to the max token input allowed. The same context-length constraint was applied to all retrieval based prompts to ensure fair comparison across methods. 
+1. BM25 – finds exact keyword matches. Works well if the question and text use the same words.
+2. FAISS – converts text into vectors and finds passages that are “similar in meaning.”
+3. FAISS + MMR – improves FAISS by choosing results that are diverse and non-redundant.
+4. Hybrid approach – combines BM25 and FAISS to incorporate meaning and exact matching.
+5. Semantic chunking – splits long notes into meaningful segments so the focus is on smaller, coherent chunks.
+6. SPLADE – an advanced model that matches semantically similar words even if the wording is different.
+
+We also tested a baseline approach where the LLM received the entire patient record without retrieval. This allowed us to evaluate whether focusing on relevant passages improves performance.
 
 ### LLM Prompting and Answer Generation
-All LLM inference was conducted using AWS Bedrock, which provides a secure environment compliant with HIPAA and institutional data use agreements (DUA). 
 
-We experimented with several models available through Bedrock, including Claude 3 and DeepSeek-V3, and ultimately selected DeepSeek-V3 for the primary experiments due to its favorable balance between cost and performance \citep{deepseekai2025deepseekv3technicalreport}. In the MedHELM benchmark conducted on multiple LLM's, including versions of Claude, GPT, Gemini, and Llama, Deep Seek achieved the highest win-rate of 0.66, which represents the proportion of pairwise comparisons where each model achieved superior performance across all 35  \citep{bedi2025medhelmholisticevaluationlarge}.
+ALL LLM tests were run using AWS Bedrock, a secure platform to protect patient privacy. We used the DeepSeek-V3 model because of its favorable balance between cost and performance. 
 
-For each retrieval strategy, the top-k passages returned by the retriever were used to construct the prompt context. The prompt structure followed a consistent format in which the instruction and the retrieved passages were provided first, followed by the query. 
+For each retrieval method, the most relevant passages were selected and provided to the LLM along with the query. The LLM then performed two tasks:
 
-The LLM was tasked with performing two types of operations: classification and extraction. Classification required the model to determine whether the provided passages contained sufficient information to answer the query. Information extraction required the model to identify and extract the specific clinical evidence corresponding to the query. In the classification task, a positive (“Yes”) response indicates that the model identified evidence relevant to the query. In the extraction task, baseline and retrieval method outputs were compared against the ground-truth synthetic needles to determine whether the correct evidence had been retrieved and extracted.
+ - Classification: Determine whether the retrieved passages contained enough information to answer the query. A positive “Yes” response indicated that the model identified relevant evidence.
+ - Extraction: Identify and extract the specific clinical evidence related to the query. A match between the extracted evidence and the synthetic needles indicated that the correct information had been found.
+
+This way, we could measure both if the LLM could answer the query when given limited context and if the limited context even contained the corrected the correct information.
 
 ### Evaluation
-Model outputs were evaluated by comparing responses to the known synthetic needles embedded within each patient document. Retrieval effectiveness was assessed by measuring whether the inserted needle appeared within the retrieved passages. LLM performance was evaluated using classification and extraction accuracy across retrieval strategies and clinical elements.
 
+We evaluated model performance by comparing the LLM’s responses to the known synthetic needles inserted into each document. This allowed us to measure which retrieval strategies helped the LLM locate the hidden information most often and how accurately the model could identify and extract key clinical evidence
 
 ## Results
 
-## Discussion
+
+Our experiments revealed clear differences in how well each retrieval method helped the LLM find the hidden “needle” information within patient records. SPLADE consistently achieved the highest retrieval success, meaning it was the most effective at finding the relevant clinical evidence across all five clinical elements. In contrast, BM25 showed the lowest performance, struggling to retrieve relevant passages when the wording of the query differed from the text. Methods based on semantic similarity, such as FAISS and semantic chunking, performed better than BM25 but still did not reach the performance of SPLADE. The hybrid approach, which combines keyword matching and semantic similarity, generally improved performance when both individual methods worked well. Adding MMR (Maximal Marginal Relevance) to FAISS further improved results by reducing redundancy in the retrieved passages while maintaining relevance. Overall, these results suggest that retrieval methods that understand semantic meaning are more effective than simple keyword matching when searching clinical notes.
+
+We also found that retrieval success depended on the type of clinical information being searched. Some elements were easier for the LLM to find than others. The easiest elements to retrieve were clinical trial information and comfort care directives. Vasopressor administration was the most difficult to retrieve, with severe sepsis indicators and administrative contraindications to care being moderately difficult. Across nearly all retrieval methods, vasopressor-related information was the hardest to locate, while clinical trial information produced the highest retrieval accuracy. This variation suggests that certain types of clinical language are inherently more difficult for retrieval systems to identify, even when the ground truth evidence is present.
+
+We next evaluated how well the LLM could answer questions and extract evidence from the patient records. When the model received retrieved passages, it generally performed better than when given the entire patient record at once. This shows that focusing the model on relevant sections of text helps improve accuracy. Among all retrieval strategies, SPLADE produced the highest LLM accuracy, FAISS + MMR performed second best, and BM25 consistently produced the lowest accuracy. These results demonstrate that LLMs perform best when they are guided toward the most relevant information rather than processing large, unfiltered documents.
+
+We also studied how the amount of text provided to the model affected performance and found that two key patterns emerged.
+ - Longer context decreased accuracy, likely because irrelevant information distracted the model.
+ - Retrieving more passages increased the chance of finding the needle, but too many passages introduced additional noise.
+Balancing these factors, we found that retrieving the top 10 passages provided the best trade-off between retrieval success and LLM accuracy.
+
+Finally, we examined the relationship between retrieval success and LLM accuracy. We observed a strong positive correlation between the two. When retrieval methods successfully located the needle, the LLM almost always answered correctly. When retrieval failed to locate the needle, the LLM struggled to produce accurate responses. Interestingly, although the baseline method (providing the full patient record) technically included the needle every time, the LLM performed worse due to the large amount of irrelevant context. This finding highlights a key takeaway: LLMs are highly effective at extracting clinical information when they are provided with focused high quality context.
 
 ## Conclusion
 
+Our results show that the success of LLMs in analyzing clinical notes depends heavily on how well relevant information is retrieved. Even powerful models struggle when they are given large unfiltered documents. However, when retrieval methods successfully identify the most relevant passages, LLMs can accurately locate and extract important clinical information. 
+
+This finding highlights a key challenge in applying LLMs to healthcare: medical records are long, complex, and often contain distracting information. Improving retrieval strategies can help the LLM focus on the most relevant parts of patient records and avoid errors caused by irrelevant context. 
+
+To study this problem safely, we developed a benchmark that allows researchers to evaluate retrieval and extraction methods without exposing sensitive patient data.
+
+Overall, our results suggest that improving retrieval systems may be one of the most effective ways to make AI tools more reliable for analyzing clinical documentation.
+
+Future research will focus on testing these retrieval strategies on more complex clinical datasets and developing improved retrieval methods. As these systems improve, LLMs could become valuable tools for helping clinicians quickly locate critical information within large volumes of medical records, potentially reducing documentation burden and improving access to patient insights.
 
 </main>
 
