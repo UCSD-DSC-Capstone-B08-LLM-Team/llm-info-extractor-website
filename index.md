@@ -11,9 +11,10 @@ layout: default
 {:toc}
 
 <div class="paper-sticky-buttons">
-  <a href="https://drive.google.com/file/d/1beHVn-TZo4fo-0Z3nwYLSUlvO80vWadx/view?usp=drive_link">Report</a>
-  <a href="https://drive.google.com/file/d/1nn0oLFKVXM5CdUsTCDm7IRCWcMrwmaUz/view?usp=drive_link">Poster</a>
-  <a href="https://github.com/UCSD-DSC-Capstone-B08-LLM-Team/LLM_as_Info_Extractor">Github</a>
+  <a href="https://drive.google.com/file/d/1beHVn-TZo4fo-0Z3nwYLSUlvO80vWadx/view?usp=drive_link" target="_blank">Report</a>
+  <a href="https://drive.google.com/file/d/1nn0oLFKVXM5CdUsTCDm7IRCWcMrwmaUz/view?usp=drive_link" target="_blank">Poster</a>
+  <a href="https://github.com/UCSD-DSC-Capstone-B08-LLM-Team/LLM_as_Info_Extractor" 
+  target="_blank">Github</a>
 </div>
 </aside>
 
