@@ -108,6 +108,15 @@ html {
     text-align: center;
 }
 
+.paper-figure img {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.paper-figure {
+    margin-bottom: 2rem;
+}
+
 /* Mobile layout */
 @media (max-width: 900px) {
 
