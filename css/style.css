@@ -114,7 +114,13 @@ html {
 }
 
 .paper-figure {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+
+.figure-caption {
+    font-size: 0.9rem;
+    color: #666;
+    text-align: center;
 }
 
 /* Mobile layout */
